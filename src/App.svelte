@@ -1,52 +1,13 @@
 <script lang="ts">
 	import Dashboard from "./lib/Dashboard.svelte";
 	import Package from "./lib/Package.svelte";
+  import Serial from "./lib/Serial.svelte"
 	import Profile from "./lib/Profile.svelte";
 	import Settings from "./lib/Settings.svelte";
 	import Footer from "./lib/footer.svelte";
-	type Page = "Dashboard" | "Package" | "Settings" | "Profile";
+	type Page = "Dashboard" | "Serial" | "Package" | "Settings" | "Profile";
 	let page: Page = "Dashboard";
 
-	import { onMount } from "svelte";
-	import { invoke } from "@tauri-apps/api/tauri";
-	import { listen } from "@tauri-apps/api/event";
-
-	let ports: string[] = [];
-	let selectedPort = "";
-	let serialData: string[] = [];
-
-	onMount(() => {
-		async function setup() {
-			try {
-				const availablePorts: string[] =
-					await invoke("list_serial_ports");
-				ports = availablePorts;
-			} catch (error) {
-				console.error("Error fetching serial ports:", error);
-			}
-
-			// Listen for the serial-data event from the backend
-			const unlisten = await listen("serial-data", (event) => {
-				serialData = [...serialData, event.payload as string];
-			});
-
-			return () => {
-				unlisten();
-			};
-		}
-		setup();
-	});
-	async function startReadingSerial() {
-		if (selectedPort) {
-			try {
-				await invoke("start_serial_reading", {
-					portName: selectedPort,
-				});
-			} catch (error) {
-				console.error("Error starting serial reading:", error);
-			}
-		}
-	}
 </script>
 
 <main>
@@ -58,6 +19,14 @@
 					on:click={() => {
 						page = "Dashboard";
 					}}>Dashboard</a
+				>
+			</li>
+			<li>
+				<a
+					href="#serial"
+					on:click={() => {
+						page = "Serial";
+					}}>Serial</a
 				>
 			</li>
 			<li>
@@ -90,6 +59,8 @@
 	<div>
 		{#if page == "Dashboard"}
 			<Dashboard></Dashboard>
+		{:else if page == "Serial"}
+			<Serial></Serial>
 		{:else if page == "Package"}
 			<Package></Package>
 		{:else if page == "Profile"}
