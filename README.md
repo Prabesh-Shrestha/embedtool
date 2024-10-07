@@ -24,5 +24,5 @@ Don&#39;t forget to give the project a star! Thanks again!
 If you have any questions or suggestions, feel free to reach out to us:
 
 - Raise an issue on the repository: [GitHub Repository](https://github.com/Prabesh-Shrestha/makeread.me)
-- Connect with us on Twitter: [@prabesh.sh](https://instagram.com/prabesh.sh)
+- Connect with us on Instagram: [@prabesh.sh](https://instagram.com/prabesh.sh)
 
