@@ -40,3 +40,35 @@
 		}
 	}
 </script>
+
+<main>
+	<h1>Serial Port Reader</h1>
+
+	<!-- Dropdown to select a serial port -->
+	<select bind:value={selectedPort}>
+		<option value="" disabled>Select a port</option>
+		{#each ports as port}
+			<option value={port}>{port}</option>
+		{/each}
+	</select>
+
+	<button on:click={startReadingSerial} disabled={!selectedPort}>
+		Start Reading
+	</button>
+
+	<h2>Live Serial Data:</h2>
+	<div>
+		{#each serialData as data}
+			<p>{data}</p>
+		{/each}
+	</div>
+</main>
+
+<style>
+	main {
+		font-family: Arial, sans-serif;
+		margin: 0 auto;
+		padding: 1rem;
+		max-width: 600px;
+	}
+</style>
